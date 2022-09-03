@@ -1,0 +1,93 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    width: 240px;
+    height: 340px;
+    background-color: rgb(57, 55, 55);
+    margin: 150px auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+.display {
+    height: 70px;
+    text-align: right;
+    color: white;
+    font-size: 50px;
+    padding: 15px 10px 0px 0px;
+}
+
+.buttons {
+    display: flex;
+    flex: 1 0 auto;
+}
+
+.left-buttons-block {
+    display: flex;
+    flex-wrap: wrap;
+    width: 75%;
+}
+
+.left-buttons-block .button {
+    width: 33.3%;
+    border-right: 1px solid rgb(57, 55, 55);
+}
+
+.left-buttons-block .zero {
+    width: 66.6%;
+    border-bottom-left-radius: 10px;
+}
+
+.right-buttons-block {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    width: 25%;
+}
+
+.right-buttons-block .button {
+    flex: 1 0 auto;
+}
+
+.right-buttons-block button:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+button {
+    font-size: 20px;
+    color: white;
+    border: none;
+    border-top: 1px solid rgb(57, 55, 55);
+}
+
+.control{
+    background-color: rgb(93, 92, 92);
+}
+
+.control:active,
+.digit {
+    background-color: rgb(139, 135, 135);
+}
+
+.digit:active {
+    background-color: rgb(202, 194, 194);
+}
+
+.operation {
+    background-color: orange;
+}
+
+.operation:active {
+    background-color: rgb(220, 143, 2);
+}
+
+.operation:focus {
+    box-shadow: 0 1px 0 #000 inset,
+                0 -1px 0 #000 inset,
+                1px 0 0 #000 inset;
+}
