@@ -1,62 +1,49 @@
-let displayValue; 
+let counter = 0;
+let result;
+let num1 = undefined;
+let num2 = undefined;
 
 let calcDisplay = document.querySelector('.display');
 
-let buttons = document.querySelectorAll('.digit'); // digits and ',' buttons
-let controls = document.querySelectorAll('.control'); // AC, +/-, % and 'del' buttons
+const controls = document.querySelectorAll('.control');
+const inputSymbols = document.querySelectorAll('.digit');
 
-//** Event listeners for digits and ',' buttons. Display according value on calculator display */
-buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-        displayValue = calcDisplay.textContent;
-        if (displayValue == 0 && button.textContent !== ',') calcDisplay.textContent = '';
-        if (displayValue.includes(',') && button.textContent == ',') return;
-        calcDisplay.textContent += button.textContent;
-    });
-});
+function checkDisplay() {
+    return calcDisplay.textContent;
+};
 
-//** Object with control buttons */
-let controlButtons = {
+const calcFunctions = {
     'AC': function () {
         calcDisplay.textContent = 0;
     },
     '+/-': function () {
-        displayValue = calcDisplay.textContent;
-        calcDisplay.textContent = Number(displayValue) * (-1);
+        calcDisplay.textContent = Number(checkDisplay()) * (-1);
     },
     '%': function () {
-        displayValue = calcDisplay.textContent;
-        calcDisplay.textContent = Number(displayValue)/100;
+        calcDisplay.textContent = Number(checkDisplay()) / 100;
     },
     'del': function () {
-        displayValue = calcDisplay.textContent;
-        if (displayValue.length > 1) {
-            calcDisplay.textContent = displayValue.substring(0, displayValue.length - 1);
-        } else controlButtons.AC();
+        if (checkDisplay().length > 1 && Number(checkDisplay().substring(0, checkDisplay().length - 1)) !== 0) {
+            calcDisplay.textContent = checkDisplay().substring(0, checkDisplay().length - 1);
+        } else calcFunctions.AC();
     },
-}
+};
 
-//** Event listeners for control buttons  */
 controls.forEach((control) => {
     control.addEventListener('click', () => {
         let controlAction = control.textContent;
-        controlButtons[controlAction]();
-        console.log(controlButtons[controlAction]);
+        calcFunctions[controlAction]();
     });
 });
 
-//** Function for basic operations */
-function operate(num1, num2, operator) {
-    switch (operator) {
-        case '+':
-            return 0 + (num1 + num2).toFixed(2);
-        case '-':
-            return 0 + (num1 - num2).toFixed(2);
-        case '*':
-            return 0 + (num1 * num2).toFixed(2);
-        case '/':
-            if (num2 === 0) {
-                return 'undefined/infinity';
-            } else return 0 + (num1 / num2).toFixed(2);
-    }
-};
+inputSymbols.forEach((symbol) => {
+    symbol.addEventListener('click', () => {
+        let buttonValue = symbol.textContent;
+        if (checkDisplay().includes('.') && buttonValue == '.') return;
+        if (Number(checkDisplay()) === 0 && buttonValue !== '.' && !checkDisplay().includes('.')) {
+            calcDisplay.textContent = buttonValue;
+        } else {
+            calcDisplay.textContent += buttonValue;
+        } 
+    });
+});
