@@ -38,33 +38,36 @@ digits.forEach((digit) => {
     })
 })
 
+const controlsObj = {
+    'AC': function () {
+        result = undefined;
+        operatorValue = undefined;
+        newInputState = 0;
+        displayValue.textContent = 0;
+    },
+    '+/-': function () {
+        displayValue.textContent = Number(displayValue.textContent) * (-1);
+    },
+    '%': function () {
+        displayValue.textContent = Number(displayValue.textContent) / 100;
+    },
+    'del': function () {
+        if (displayValue.textContent.length > 1) {
+            displayValue.textContent = displayValue.textContent.substring(0, displayValue.textContent.length - 1);
+        } else {
+            displayValue.textContent = 0;
+            result = undefined;
+            operatorValue = undefined;
+        }
+    },
+}
+
 const controls = document.querySelectorAll('.control');
 
 controls.forEach((control) => {
     control.addEventListener('click', () => {
-        switch (control.textContent) {
-            case 'AC':
-                result = undefined;
-                operatorValue = undefined;
-                newInputState = 0;
-                displayValue.textContent = 0;
-                break;
-            case '+/-':
-                displayValue.textContent = Number(displayValue.textContent) * (-1);
-                break;
-            case '%':
-                displayValue.textContent = Number(displayValue.textContent) / 100;
-                break;
-            case 'del':
-                if (displayValue.textContent.length > 1) {
-                    displayValue.textContent = displayValue.textContent.substring(0, displayValue.textContent.length - 1);
-                } else {
-                    displayValue.textContent = 0;
-                    result = undefined;
-                    operatorValue = undefined;
-                }
-                break;
-        }
+        let controlAction = control.textContent;
+        controlsObj[controlAction]();
     })
 })
 
