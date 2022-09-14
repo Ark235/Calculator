@@ -71,6 +71,24 @@ controls.forEach((control) => {
     })
 })
 
+operationsObj = {
+    '/': function () {
+        result = operate(result, displayValue.textContent, divide);
+    },
+    '*': function () {
+        result = operate(result, displayValue.textContent, multiply);
+    },
+    '-': function () {
+        result = operate(result, displayValue.textContent, subtract);
+    },
+    '+': function () {
+        result = operate(result, displayValue.textContent, add);
+    },
+    '=': function (operatorValue) {
+        operationsObj[operatorValue];
+    }
+}
+
 const operations = document.querySelectorAll('.operation');
 
 operations.forEach((operation) => {
@@ -79,35 +97,7 @@ operations.forEach((operation) => {
             result = Number(displayValue.textContent);
             operatorValue = operation.textContent;
         } else {
-            switch (operatorValue) {
-                case '/':
-                    result = operate(result, displayValue.textContent, divide);
-                    break;
-                case '*':
-                    result = operate(result, displayValue.textContent, multiply);
-                    break;
-                case '-':
-                    result = operate(result, displayValue.textContent, subtract);
-                    break;
-                case '+':
-                    result = operate(result, displayValue.textContent, add);
-                    break;
-                case '=':
-                    switch (operatorValue) {
-                        case '/':
-                            result = operate(result, displayValue.textContent, divide);
-                            break;
-                        case '*':
-                            result = operate(result, displayValue.textContent, multiply);
-                            break;
-                        case '-':
-                            result = operate(result, displayValue.textContent, subtract);
-                            break;
-                        case '+':
-                            result = operate(result, displayValue.textContent, add);
-                            break;
-                    }
-            }
+            operationsObj[operatorValue]();
             displayValue.textContent = result;
             operatorValue = undefined;
         }
