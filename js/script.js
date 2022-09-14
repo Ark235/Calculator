@@ -93,6 +93,14 @@ const operations = document.querySelectorAll('.operation');
 
 operations.forEach((operation) => {
     operation.addEventListener('click', () => {
+        if (operation.textContent === '=' && operatorValue === undefined) return;
+        if (operatorValue === '/' && displayValue.textContent === '0') {
+            displayValue.textContent = 'nope :)';
+            result = undefined;
+            operatorValue = undefined;
+            newInputState = 0;
+            return 'Nope, we\'re not dividing by 0';
+        }
         if (operatorValue === undefined) {
             result = Number(displayValue.textContent);
             operatorValue = operation.textContent;
