@@ -46,9 +46,8 @@ const operationsObj = {
         operationsObj[operatorValue];
     }
 }
-digits.forEach((digit) => {
-    digit.addEventListener('click', () => {
-        if (displayValue.textContent.includes('.') && digit.textContent.includes('.')) return;
+function displayInput(digit) {
+    if (displayValue.textContent.includes('.') && digit.textContent.includes('.')) return;
         if (displayValue.textContent === '0' && digit.textContent !== '.'
             || newInputState == 0 && digit.textContent !== '.') {
             displayValue.textContent = digit.textContent;
@@ -56,6 +55,10 @@ digits.forEach((digit) => {
             displayValue.textContent += digit.textContent;
         }
         newInputState = 1;
+}
+digits.forEach((digit) => {
+    digit.addEventListener('click', () => {
+        displayInput(digit);
     })
 })
 controls.forEach((control) => {
