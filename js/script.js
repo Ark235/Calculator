@@ -88,3 +88,8 @@ operations.forEach((operation) => {
         newInputState = 0;
     })
 })
+
+window.addEventListener('keydown', function(e) {
+    let digitKey = document.querySelector(`button[data-key='${e.keyCode}']`);
+    displayInput(digitKey);
+})
