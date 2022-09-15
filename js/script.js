@@ -3,41 +3,9 @@ let operatorValue = undefined;
 let displayValue = document.querySelector('.display');
 let newInputState = 0;
 
-function add(num1, num2) {
-    return Number(Number(num1) + Number(num2)).toFixed(2);
-}
-
-function subtract(num1, num2) {
-    return Number(Number(num1) - Number(num2)).toFixed(2);
-}
-
-function multiply(num1, num2) {
-    return Number(num1 * num2).toFixed(2);
-}
-
-function divide(num1, num2) {
-    return Number(num1 / num2).toFixed(2);
-}
-
-function operate(num1, num2, operator) {
-    return Number(operator(num1, num2)).toFixed(2);
-}
-
 const digits = document.querySelectorAll('.digit');
-
-digits.forEach((digit) => {
-    digit.addEventListener('click', () => {
-        if (displayValue.textContent.includes('.') && digit.textContent.includes('.')) return;
-        if (displayValue.textContent === '0' && digit.textContent !== '.'
-            || newInputState == 0 && digit.textContent !== '.') {
-            displayValue.textContent = digit.textContent;
-        } else {
-            displayValue.textContent += digit.textContent;
-        }
-        newInputState = 1;
-    })
-})
-
+const controls = document.querySelectorAll('.control');
+const operations = document.querySelectorAll('.operation');
 const controlsObj = {
     'AC': function () {
         result = undefined;
@@ -61,36 +29,41 @@ const controlsObj = {
         }
     },
 }
-
-const controls = document.querySelectorAll('.control');
-
+const operationsObj = {
+    '/': function () {
+        result = (Number(result) / Number(displayValue.textContent)).toFixed(2);
+    },
+    '*': function () {
+        result = (Number(result) * Number(displayValue.textContent)).toFixed(2);
+    },
+    '-': function () {
+        result = (Number(result) - Number(displayValue.textContent)).toFixed(2);
+    },
+    '+': function () {
+        result = (Number(result) + Number(displayValue.textContent)).toFixed(2);
+    },
+    '=': function (operatorValue) {
+        operationsObj[operatorValue];
+    }
+}
+digits.forEach((digit) => {
+    digit.addEventListener('click', () => {
+        if (displayValue.textContent.includes('.') && digit.textContent.includes('.')) return;
+        if (displayValue.textContent === '0' && digit.textContent !== '.'
+            || newInputState == 0 && digit.textContent !== '.') {
+            displayValue.textContent = digit.textContent;
+        } else {
+            displayValue.textContent += digit.textContent;
+        }
+        newInputState = 1;
+    })
+})
 controls.forEach((control) => {
     control.addEventListener('click', () => {
         let controlAction = control.textContent;
         controlsObj[controlAction]();
     })
 })
-
-operationsObj = {
-    '/': function () {
-        result = operate(Number(result), Number(displayValue.textContent), divide);
-    },
-    '*': function () {
-        result = operate(Number(result), Number(displayValue.textContent), multiply);
-    },
-    '-': function () {
-        result = operate(Number(result), Number(displayValue.textContent), subtract);
-    },
-    '+': function () {
-        result = operate(Number(result), Number(displayValue.textContent), add);
-    },
-    '=': function (operatorValue) {
-        operationsObj[operatorValue];
-    }
-}
-
-const operations = document.querySelectorAll('.operation');
-
 operations.forEach((operation) => {
     operation.addEventListener('click', () => {
         if (operation.textContent === '=' && operatorValue === undefined) return;
